@@ -18,7 +18,7 @@ def grad_emailer():
         # create email message
         msg = EmailMessage()
         msg["From"] = "ckodontech@gmail.com"
-        msg["To"] = "franciskohara@gmail.com"
+        msg["To"] = email_address
         msg["Subject"] = "Ckodon Mentorship Program Update"
         body = f"""Dear {name}, 
 
