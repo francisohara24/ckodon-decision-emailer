@@ -2,6 +2,7 @@ import pandas as pd
 from smtplib import SMTP
 from email.message import EmailMessage
 import json
+from time import sleep
 from email_validator import validate
 
 
@@ -9,6 +10,7 @@ from email_validator import validate
 def grad_emailer():
     smtp = start_smtp()  # instantiate smtp client
     graduate_students = pd.read_excel("./data/Graduate Pairing.xlsx")  # import graduate student data
+    wait_counter = 0  # count no. of emails till delay.
     for row in graduate_students.index:
         name = graduate_students.loc[row]["Full Name"]
         email_address = graduate_students.loc[row]["Email"]
@@ -16,7 +18,7 @@ def grad_emailer():
         # create email message
         msg = EmailMessage()
         msg["From"] = "ckodontech@gmail.com"
-        msg["To"] = email_address
+        msg["To"] = "franciskohara@gmail.com"
         msg["Subject"] = "Ckodon Mentorship Program Update"
         body = f"""Dear {name}, 
 
@@ -36,15 +38,21 @@ The Ckodon Foundation Team."""
         try:
             smtp.send_message(msg)
             print("SENT")
+            wait_counter += 1
         except:
             print(row + 2, name, email_address)
+
+        # wait 1 minute every 50 emails
+        if wait_counter == 50:
+            wait_counter = 0
+            wait()
 
 # function for sending undergraduate decisions
 def undergrad_emailer():
     pass
 
 
-# instantiate SMTP client
+# function for instantiating SMTP client
 def start_smtp():
     client_credentials = json.loads(open("./data/credentials.json").read())
     hostname = client_credentials["hostname"]
@@ -55,6 +63,13 @@ def start_smtp():
     smtp.starttls()
     smtp.login(username, password)
     return smtp
+
+
+# function for waiting 1 minute
+def wait():
+    duration_s = 60  # wait duration in seconds
+    print(f"-----Waiting for {duration_s} seconds-----")
+    sleep(duration_s)
 
 
 grad_emailer()
