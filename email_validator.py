@@ -1,3 +1,4 @@
+"""Script for validating applicant email addresses."""
 from re import search
 
 
