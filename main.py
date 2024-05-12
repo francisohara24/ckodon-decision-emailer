@@ -21,6 +21,7 @@ smtp.login(username, password)
 counter = 0  # no. of emails sent
 delay_s = 60  # delay in seconds
 
+# construct html email message
 message = MIMEMultipart()
 message["From"] = "ckodontech@gmail.com"
 message["To"] = "franciskohara@gmail.com"
@@ -49,6 +50,7 @@ The Ckodon Foundation
 content = MIMEText(text, "html")
 message.attach(content)
 
+# send html email message
 try:
     smtp.send_message(message)
     print("Success!")
