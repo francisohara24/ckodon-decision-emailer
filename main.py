@@ -38,10 +38,10 @@ text = """\
 <p style="font-size:15px">
 Hello Mentee,<br><br>
 
-This is test email.<br><br>
+This is a test email.<br><br>
 
-Best,
-The Ckodon Foundation
+Best,<br>
+The Ckodon Foundation.
 </p>
 </div>
 </body>
